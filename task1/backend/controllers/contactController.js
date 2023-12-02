@@ -59,18 +59,17 @@ export const getAllContact = catchAsyncError(async (req, res, next) => {
   
 
   export const editContact = catchAsyncError(async (req, res, next) => {
-    const contactId = req.params.id;
-    const { firstName, lastName, email, phone } = req.body;
+    const { id, firstName, lastName, email, phone } = req.body;
   
     const updatedContact = await Contact.findByIdAndUpdate(
-      contactId,
+      id,
       {
         firstName,
         lastName,
         email,
         phone,
       },
-      { new: true } 
+      { new: true }
     );
   
     if (!updatedContact) {
@@ -85,11 +84,11 @@ export const getAllContact = catchAsyncError(async (req, res, next) => {
       contact: updatedContact,
     });
   });
-
-  export const deleteContact = catchAsyncError(async (req, res, next) => {
-    const contactId = req.params.id;
   
-    const deletedContact = await Contact.findByIdAndDelete(contactId);
+  export const deleteContact = catchAsyncError(async (req, res, next) => {
+    const { id } = req.body;
+  
+    const deletedContact = await Contact.findByIdAndDelete(id);
   
     if (!deletedContact) {
       return res.status(404).json({
@@ -100,6 +99,7 @@ export const getAllContact = catchAsyncError(async (req, res, next) => {
   
     res.status(200).json({
       success: true,
-      contact: "Delected contact",
+      contact: "Deleted contact",
     });
   });
+  
