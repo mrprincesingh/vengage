@@ -89,9 +89,10 @@ export const getAllContact = catchAsyncError(async (req, res, next) => {
   
   
   export const deleteContact = catchAsyncError(async (req, res, next) => {
-    const { _id } = req.params; 
+    const  {id}  = req.params;
+    console.log("_id received:", id);
   
-    const deletedContact = await Contact.findByIdAndDelete(_id);
+    const deletedContact = await Contact.findByIdAndDelete(id);
   
     if (!deletedContact) {
       return res.status(404).json({
@@ -105,5 +106,6 @@ export const getAllContact = catchAsyncError(async (req, res, next) => {
       contact: "Deleted contact",
     });
   });
+  
   
   
