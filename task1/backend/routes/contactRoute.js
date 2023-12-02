@@ -5,7 +5,7 @@ import { addContact, deleteContact, editContact, getAllContact } from "../contro
 const router = express.Router();
 router.route("/contact").get(getAllContact);
 router.route("/addcontact").post(addContact);
-router.route("/editcontact/:id").put(editContact);
-router.route("/delete/:id").delete(deleteContact);
+router.route("/editcontact").put(editContact);
+router.route("/delete").delete(deleteContact);
 
 export default router;
