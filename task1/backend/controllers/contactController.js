@@ -58,37 +58,40 @@ export const getAllContact = catchAsyncError(async (req, res, next) => {
   });
   
 
-  export const editContact = catchAsyncError(async (req, res, next) => {
-    const { id, firstName, lastName, email, phone } = req.body;
-  
-    const updatedContact = await Contact.findByIdAndUpdate(
-      id,
-      {
-        firstName,
-        lastName,
-        email,
-        phone,
-      },
-      { new: true }
-    );
-  
-    if (!updatedContact) {
-      return res.status(404).json({
-        success: false,
-        message: "Contact not found",
-      });
+  export const editContact = catchAsyncError(async (req, res, next)  => {
+    const { _id, firstName, lastName, email, phone } = req.body;
+    
+
+    if (!_id || !firstName || !lastName || !email || !phone) {
+      return next(new ErrorHandler("Please provide all contact details.", 400));
     }
-  
-    res.status(200).json({
-      success: true,
-      contact: updatedContact,
-    });
+
+    const contact = await Contact.findById(_id);
+
+  if (!contact) {
+    return next(new ErrorHandler("Contact not found.", 404));
+  }
+
+  // Update contact details
+  contact.firstName = firstName;
+  contact.lastName = lastName;
+  contact.email = email;
+  contact.phone = phone;
+
+  await contact.save();
+
+  res.status(200).json({
+    success: true,
+    message: "Contact updated successfully.",
+    updatedContact: contact,
   });
+  })
+  
   
   export const deleteContact = catchAsyncError(async (req, res, next) => {
-    const { id } = req.body;
+    const { _id } = req.params; 
   
-    const deletedContact = await Contact.findByIdAndDelete(id);
+    const deletedContact = await Contact.findByIdAndDelete(_id);
   
     if (!deletedContact) {
       return res.status(404).json({
@@ -102,4 +105,5 @@ export const getAllContact = catchAsyncError(async (req, res, next) => {
       contact: "Deleted contact",
     });
   });
+  
   
