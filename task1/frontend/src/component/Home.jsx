@@ -9,11 +9,11 @@ const Home = () => {
     const toast = useToast();
     const data = useSelector((state) => state.reducer.Contact.contacts);
     const error = useSelector((state) => state.reducer.isError);
-    console.log('Error:', error);
+
     const [searchQuery, setSearchQuery] = useState('');
     const success = useSelector((state) => state.reducer)
     const loading = useSelector((state) => state.reducer.isLoading)
-    console.log(error);
+
     const dispatch = useDispatch();
     const [editingContact, setEditingContact] = useState(null);
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -27,7 +27,7 @@ const Home = () => {
       const handleEdit = (id) => {
       
         const contactToEdit = data.find((item) => item._id === id);
-    
+       console.log("contactToEdit" , contactToEdit)
       
         setEditingContact(contactToEdit);
     
@@ -37,16 +37,16 @@ const Home = () => {
 
       const handleUpdateContact = async () => {
         try {
-          // Extract the necessary fields from the form data
+         
           const { _id, firstName, lastName, email, phone } = editingContact;
     
-          // Dispatch the update action
+           console.log( _id, firstName, lastName, email, phone)
           await dispatch(editContact(_id, { firstName, lastName, email, phone }));
     
-          // Dispatch the action to get all contacts
+         
           await dispatch(getAllContact());
     
-          // Display success toast
+      
           toast({
             title: 'Contact Updated',
             description: 'Contact details updated successfully.',

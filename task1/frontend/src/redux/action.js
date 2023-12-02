@@ -4,7 +4,7 @@ import axios from "axios";
 export const getAllContact = (searchQuery="") => (dispatch) => {
     dispatch({type: types.GET_CONTACT_REQUEST});
     return axios
-    .get(`http://localhost:4000/api/v1/contact?search=${searchQuery}`)
+    .get(`https://vengage.vercel.app/api/v1/contact?search=${searchQuery}`)
     .then((res) => {
         dispatch({type: types.GET_CONTACT_SUCCESS, payload: res.data});
    
@@ -18,7 +18,7 @@ export const postContact = ({ firstName, lastName, email, phone }) => (dispatch)
     dispatch({ type: types.POST_CONTACT_REQUEST });
   
     return axios
-      .post(`http://localhost:4000/api/v1/addcontact`, { firstName, lastName, email, phone })
+      .post(`https://vengage.vercel.app/api/v1/addcontact`, { firstName, lastName, email, phone })
       .then((res) => {
         dispatch({ type: types.POST_CONTACT_SUCCESS, payload: res.data });
       })
@@ -33,7 +33,7 @@ export const postContact = ({ firstName, lastName, email, phone }) => (dispatch)
     dispatch({ type: types.DELETE_CONTACT_REQUEST });
   
     return axios
-      .delete(`http://localhost:4000/api/v1/delete/${id}`)
+      .delete(`https://vengage.vercel.app/api/v1/delete/${id}`)
       .then((res) => {
         // Check the structure of the response from the server
         dispatch({ type: types.DELETE_CONTACT_SUCCESS, payload: res.data });
@@ -48,7 +48,7 @@ export const postContact = ({ firstName, lastName, email, phone }) => (dispatch)
     dispatch({ type: types.EDIT_CONTACT_REQUEST });
   
     return axios
-      .put(`http://localhost:4000/api/v1/editcontact/${id}`, { firstName, lastName, email, phone })
+      .put(`https://vengage.vercel.app/api/v1/editcontact/${id}`, { firstName, lastName, email, phone })
       .then((res) => {
         // Check the structure of the response from the server
         dispatch({ type: types.EDIT_CONTACT_SUCCESS, payload: res.data });
